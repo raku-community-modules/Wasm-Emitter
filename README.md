@@ -1,12 +1,26 @@
-# Wasm::Emitter
+[![Actions Status](https://github.com/lizmat/Wasm-Emitter/actions/workflows/test.yml/badge.svg)](https://github.com/lizmat/Wasm-Emitter/actions)
 
-A Raku module to emit the [WebAssembly](https://webassembly.org/) binary
-format.
+NAME
+====
 
-## Example
+Wasm::Emitter - Emit the WebAssembly binary format
 
-This emits the "hello world" WebAssembly program using WASI (the WebAssembly
-System Interface) to provide I/O functions. 
+SYNOPSIS
+========
+
+```raku
+use Wasm::Emitter;
+```
+
+DESCRIPTION
+===========
+
+A Raku module to emit the [WebAssembly](https://webassembly.org/) binary format.
+
+Example
+=======
+
+This emits the "hello world" WebAssembly program using WASI (the WebAssembly System Interface) to provide I/O functions. 
 
 ```raku
 # Create an instance of the emitter, which can emit a module.
@@ -62,22 +76,265 @@ my $buf = $emitter.assemble();
 spurt 'hello.wasm', $buf;
 ```
 
-## API Documentation
+Functionality
+=============
 
-Refer to the Pod documentation on the types and functions.
+To the best of my knowledge, this covers all of the WebAssembly 2.0 specified features except the vector instructions. None of the proposed specifications are currently implemented (although some of them are liable to attract my attention ahead of the vector instructions).
 
-## Functionality
+Support policy
+==============
 
-To the best of my knowledge, this covers all of the WebAssembly 2.0 specified
-features except the vector instructions. None of the proposed specifications
-are currently implemented (although some of them are liable to attract my
-attention ahead of the vector instructions).
+This is a module developed for personal interest. I'm sharing it in case it's fun or useful to anybody else, not because I want yet another open source project to maintain. PRs that include tests and are provided in an easy to review form will likely be merged quite quickly, so long as no major flaws are noticed.
 
-## Support policy
+API Documentation
+=================
 
-This is a module developed for personal interest. I'm sharing it in case it's
-fun or useful to anybody else, not because I want yet another open source
-project to maintain. PRs that include tests and are provided in an easy to
-review form will likely be merged quite quickly, so long as no major flaws
-are noticed. For anything needing more effort on my part, please don't expect
-a quick response.
+class Wasm::Emitter
+-------------------
+
+Emitter for a binary Wasm module. An instance of this represents a module. Make the various declarations, and then call C<assemble> to produce a C<Buf> with the WebAssembly.
+
+### has Positional[Wasm::Emitter::Types::FunctionType] @!function-types
+
+Function types, all distinct.
+
+### has Positional[Wasm::Emitter::FunctionImport] @!function-imports
+
+Function imports.
+
+### has Positional[Wasm::Emitter::TableImport] @!table-imports
+
+Table imports.
+
+### has Positional[Wasm::Emitter::MemoryImport] @!memory-imports
+
+Memory imports.
+
+### has Positional[Wasm::Emitter::GlobalImport] @!global-imports
+
+Global imports.
+
+### has Positional[Wasm::Emitter::Types::TableType] @!tables
+
+Declared tables, with their table types.
+
+### has Positional[Wasm::Emitter::Types::LimitType] @!memories
+
+Declared memories, with their limits.
+
+### has Positional[Wasm::Emitter::Export] @!exports
+
+Declared exports.
+
+### has Positional[Wasm::Emitter::Data] @!data
+
+Declared data sections.
+
+### has Positional[Wasm::Emitter::Global] @!globals
+
+Declared globals.
+
+### has Positional[Wasm::Emitter::Elements] @!elements
+
+Declared elements.
+
+### has Positional[Wasm::Emitter::Function] @!functions
+
+Declared functions.
+
+### method function-type
+
+```raku
+method function-type(
+    Wasm::Emitter::Types::FunctionType $type
+) returns Int
+```
+
+Returns a type index for a function type. If the function type was already registered, returns the existing index; failing that, adds it under a new index.
+
+### method import-function
+
+```raku
+method import-function(
+    Str $module,
+    Str $name,
+    Int $type-index
+) returns Int
+```
+
+Add a function import.
+
+### method import-table
+
+```raku
+method import-table(
+    Str $module,
+    Str $name,
+    Wasm::Emitter::Types::TableType $table-type
+) returns Int
+```
+
+Add a table import.
+
+### method import-memory
+
+```raku
+method import-memory(
+    Str $module,
+    Str $name,
+    Wasm::Emitter::Types::LimitType $memory-type
+) returns Int
+```
+
+Add a memory import.
+
+### method import-global
+
+```raku
+method import-global(
+    Str $module,
+    Str $name,
+    Wasm::Emitter::Types::GlobalType $global-type
+) returns Int
+```
+
+Add a global import.
+
+### method table
+
+```raku
+method table(
+    Wasm::Emitter::Types::TableType $table-type
+) returns Int
+```
+
+Declare a table.
+
+### method memory
+
+```raku
+method memory(
+    Wasm::Emitter::Types::LimitType $limits
+) returns Int
+```
+
+Add a declaration of a memory.
+
+### method export-function
+
+```raku
+method export-function(
+    Str $name,
+    Int $function-index
+) returns Nil
+```
+
+Export a function.
+
+### method export-memory
+
+```raku
+method export-memory(
+    Str $name,
+    Int $memory-index
+) returns Nil
+```
+
+Export a memory.
+
+### method export-global
+
+```raku
+method export-global(
+    Str $name,
+    Int $global-index
+) returns Nil
+```
+
+Export a global.
+
+### method export-table
+
+```raku
+method export-table(
+    Str $name,
+    Int $table-index
+) returns Nil
+```
+
+Export a table.
+
+### method passive-data
+
+```raku
+method passive-data(
+    Blob $data
+) returns Int
+```
+
+Declare a passive data section.
+
+### method active-data
+
+```raku
+method active-data(
+    Blob $data,
+    Wasm::Emitter::Expression $offset
+) returns Int
+```
+
+Declare an active data section.
+
+### method global
+
+```raku
+method global(
+    Wasm::Emitter::Types::GlobalType $type,
+    Wasm::Emitter::Expression $init
+) returns Int
+```
+
+Declare a global.
+
+### method elements
+
+```raku
+method elements(
+    Wasm::Emitter::Elements $elements
+) returns Int
+```
+
+Declare an elements section.
+
+### method function
+
+```raku
+method function(
+    Wasm::Emitter::Function $function
+) returns Int
+```
+
+Declare a function.
+
+### method assemble
+
+```raku
+method assemble() returns Buf
+```
+
+Assemble the produced declarations into a final output.
+
+AUTHOR
+======
+
+Jonathan Worthington
+
+COPYRIGHT AND LICENSE
+=====================
+
+Copyright 2022 - 2024 Jonathan Worthington
+
+Copyright 2024 Raku Community
+
+This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
+

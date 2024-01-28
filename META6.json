@@ -1,17 +1,17 @@
 {
-  "name": "Wasm::Emitter",
-  "description": "Emit the WebAssembly binary format.",
-  "version": "0.9",
-  "perl": "6.d",
+  "auth": "zef:raku-community-modules",
   "authors": [
     "Jonathan Worthington <jnthn@jnthn.net>"
   ],
-  "auth": "zef:jnthn",
+  "build-depends": [
+  ],
   "depends": [
     "LEB128"
   ],
-  "build-depends": [],
-  "test-depends": [],
+  "description": "Emit the WebAssembly binary format",
+  "license": "Artistic-2.0",
+  "name": "Wasm::Emitter",
+  "perl": "6.d",
   "provides": {
     "Wasm::Emitter": "lib/Wasm/Emitter.rakumod",
     "Wasm::Emitter::Data": "lib/Wasm/Emitter/Data.rakumod",
@@ -24,7 +24,12 @@
     "Wasm::Emitter::Name": "lib/Wasm/Emitter/Name.rakumod",
     "Wasm::Emitter::Types": "lib/Wasm/Emitter/Types.rakumod"
   },
-  "resources": [],
-  "license": "MIT",
-  "source-url": "https://github.com/jnthn/raku-wasm-emitter"
+  "resources": [
+  ],
+  "source-url": "https://github.com/raku-community-modules/raku-wasm-emitter",
+  "tags": [
+  ],
+  "test-depends": [
+  ],
+  "version": "0.9"
 }
