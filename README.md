@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/lizmat/Wasm-Emitter/actions/workflows/test.yml/badge.svg)](https://github.com/lizmat/Wasm-Emitter/actions)
+[![Actions Status](https://github.com/raku-community-modules/Wasm-Emitter/actions/workflows/linux.yml/badge.svg)](https://github.com/raku-community-modules/Wasm-Emitter/actions) [![Actions Status](https://github.com/raku-community-modules/Wasm-Emitter/actions/workflows/macos.yml/badge.svg)](https://github.com/raku-community-modules/Wasm-Emitter/actions) [![Actions Status](https://github.com/raku-community-modules/Wasm-Emitter/actions/workflows/windows.yml/badge.svg)](https://github.com/raku-community-modules/Wasm-Emitter/actions)
 
 NAME
 ====

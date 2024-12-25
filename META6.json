@@ -26,10 +26,10 @@
   },
   "resources": [
   ],
-  "source-url": "https://github.com/raku-community-modules/raku-wasm-emitter",
+  "source-url": "https://github.com/raku-community-modules/Wasm-Emitter.git",
   "tags": [
   ],
   "test-depends": [
   ],
-  "version": "0.9"
+  "version": "0.9.1"
 }

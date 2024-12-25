@@ -1,4 +1,6 @@
 Revision history for Wasm-Emitter
 
 {{$NEXT}}
+
+0.9.1  2024-12-25T12:08:43+01:00
     - Initial version in the zef ecosystem
