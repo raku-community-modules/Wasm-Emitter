@@ -1,0 +1,13 @@
+use Test::Coverage;
+
+todo "only a very small portion of this dist appears to be tested";
+coverage-at-least 75;
+
+todo "only a very small portion of this dist appears to be tested";
+uncovered-at-most 1;
+
+source-with-coverage;
+
+report;
+
+# vim: expandtab shiftwidth=4
